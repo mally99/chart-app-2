@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Chart, Type } from '../../models/chart.model';
 import { AppState } from '../../app.state';
 import { ChartService } from '../../chart.service';
 import * as ChartActions from "../../actions/chart.actions"
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
   chartValues: Observable<Chart[]>;
 
-  constructor(private store: Store<AppState>, private chartService: ChartService) {
+  constructor(private store: Store<AppState>, private chartService: ChartService, private router: Router) {
     this.chartValues = this.store.select('chartValues');
     this.chartService.ValuesBarChart().subscribe(res => {
       const data = res as Chart[];
@@ -36,6 +37,9 @@ export class MainComponent {
     });
 
     console.log('after init:', this.chartValues)
+  }
+  ngOnInit(): void {
+    // this.router.navigate(['./mixed-chart'], { fragment: 'drop1' })
   }
   initStore(x: string, y: number, type: Type) {
     this.store.dispatch(

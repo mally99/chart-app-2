@@ -8,17 +8,17 @@ import { TOKEN } from './config/constants';
 })
 export class ChartService {
   readonly APIUrl = "http://localhost:56140";
-  headers = { 'Token': TOKEN };
+
 
   constructor(private http: HttpClient) { }
 
   ValuesBarChart() {
-    return this.http.post(this.APIUrl + '/ValuesBarChart', this.headers);
+    return this.http.post(this.APIUrl + '/ValuesBarChart', {});
   }
   ValuesLineChart() {
-    return this.http.post(this.APIUrl + '/ValuesLineChart', this.headers);
+    return this.http.post(this.APIUrl + '/ValuesLineChart', {});
   }
   ValuesScatterChart() {
-    return this.http.post(this.APIUrl + '/ValuesScatterChart', this.headers);
+    return this.http.post(this.APIUrl + '/ValuesScatterChart', {});
   }
 }

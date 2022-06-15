@@ -9,10 +9,11 @@ import { MixedChartsComponent } from './components/mixed-charts/mixed-charts.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ChartService } from './chart.service';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { StoreModule } from '@ngrx/store';
 import { addChartReducer } from './reducers/chart.reducer';
 import { MainComponent } from './components/main/main.component'
+import { CustomHttpInterceptor } from './custom-http-interceptor';
 const routes: Routes = [
   { path: 'mixed-chart', component: MixedChartsComponent },
 ];
@@ -37,7 +38,11 @@ const routes: Routes = [
       chartValues: addChartReducer
     }),
   ],
-  providers: [ChartService],
+  providers: [ChartService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: CustomHttpInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
