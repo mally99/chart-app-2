@@ -16,20 +16,19 @@ export class MainComponent {
 
   constructor(private store: Store<AppState>, private chartService: ChartService) {
     this.chartValues = this.store.select('chartValues');
-    let headers = { 'Token': '1234' };
-    this.chartService.ValuesBarChart(headers).subscribe(res => {
+    this.chartService.ValuesBarChart().subscribe(res => {
       const data = res as Chart[];
       data.map(chart => {
         this.initStore(chart.x, chart.y, Type.bar)
       })
     });
-    this.chartService.ValuesLineChart(headers).subscribe(res => {
+    this.chartService.ValuesLineChart().subscribe(res => {
       const data = res as Chart[];
       data.map(chart => {
         this.initStore(chart.x, chart.y, Type.line)
       })
     });
-    this.chartService.ValuesScatterChart(headers).subscribe(res => {
+    this.chartService.ValuesScatterChart().subscribe(res => {
       const data = res as Chart[];
       data.map(chart => {
         this.initStore(chart.x, chart.y, Type.scatted)
